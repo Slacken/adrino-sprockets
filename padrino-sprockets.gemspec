@@ -2,7 +2,7 @@
 require File.expand_path("../lib/padrino/sprockets-version.rb", __FILE__)
 
 Gem::Specification.new do |gem|
-  gem.name = "padrino-sprockets"
+  gem.name = "my-padrino-sprockets"
   gem.version = Padrino::Sprockets::VERSION
   gem.description = "Padrino with Sprockets"
   gem.summary = gem.description
@@ -16,5 +16,6 @@ Gem::Specification.new do |gem|
     'lib/padrino/sprockets-version.rb',
     'lib/padrino/sprockets.rb'
     ]
-  gem.add_dependency 'sprockets'
+  gem.add_runtime_dependency 'sprockets'
+  gem.add_runtime_dependency 'yui-compressor'
 end
