@@ -13,7 +13,7 @@ $ gem install padrino-sprockets
 Or include it in your project's `Gemfile` with Bundler:
 
 ```ruby
-gem 'padrino-sprockets', :require => "padrino/sprockets"
+gem 'my-padrino-sprockets', :require => "padrino/sprockets"
 ```
 
 ## Usage
@@ -40,12 +40,14 @@ end
 
 In production environment, use the following code in Rakefile to generate precompiled files:
 
-  desc 'precompile .css & .js manifest files'
-  task :precompile do
-    root = File.dirname(__FILE__)
-    e = Padrino::Sprockets::App.new(nil, minify: true, output: root + '/public/', root: root + '/app')
-    e.precompile(%w{application.css application.js})
-  end
+```ruby
+desc 'precompile .css & .js manifest files'
+task :precompile do
+  root = File.dirname(__FILE__)
+  e = Padrino::Sprockets::App.new(nil, minify: true, output: root + '/public/', root: root + '/app')
+  e.precompile(%w{application.css application.js})
+end
+```
 
 For more documentation about sprockets, have a look at the [Sprockets](https://github.com/sstephenson/sprockets/) gem.
 
