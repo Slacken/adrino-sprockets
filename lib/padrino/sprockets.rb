@@ -63,10 +63,11 @@ module Padrino
       end
 
       def precompile(bundles)
-        output_dir = Pathname("#{@output}/assets")
+        output_dir = Pathname(@output)
         bundles.each do |file|
           tmp = file.to_s.split('/')
-          prefix, basename = tmp[0...-1].join("/"), tmp[-1]
+          kind = {"css"=>"stylesheets", "js"=>"javascripts"}[file.to_s.split(".").last]
+          prefix, basename = tmp[0...-1].unshift(kind || 'assets').join("/"), tmp[-1]
           path, dir = output_dir.join(prefix, basename), output_dir.join(prefix)
           FileUtils.mkpath(dir) unless Dir.exist?(dir)
           # clean up first
