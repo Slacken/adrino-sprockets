@@ -26,40 +26,26 @@ app/assets/images
 app/assets/stylesheets
 ```
 
-Register sprockets in your application:
+Register sprockets in your application when development environment:
 
 ```ruby
 class Redstore < Padrino::Application
-  register Padrino::Sprockets
-  sprockets  # :url => 'assets', :root => app.root
+  if Padrino.env == :development
+    register Padrino::Sprockets
+    sprockets  # :url => 'assets', :root => app.root, :mifiy => true
+  end
 end
 ```
 
-Now when requesting a path like `/assets/application.js` it will look for a source file in one of these locations :
 
-* `app/assets/javascripts/application.js`
-* `app/assets/javascripts/application.js.coffee`
-* `app/assets/javascripts/application.js.erb`
+In production environment, use the following code in Rakefile to generate precompiled files:
 
-To minify javascripts in production do the following:
-
-In your Gemfile:
-
-```ruby
-# enable js minification
-gem 'uglifier'
-# enable css compression
-gem 'yui-compressor'
-```
-
-In your app:
-
-```ruby
-class Redstore < Padrino::Application
-  register Padrino::Sprockets
-  sprockets :minify => (Padrino.env == :production)
-end
-```
+  desc 'precompile .css & .js manifest files'
+  task :precompile do
+    root = File.dirname(__FILE__)
+    e = Padrino::Sprockets::App.new(nil, minify: true, output: root + '/public/', root: root + '/app')
+    e.precompile(%w{application.css application.js})
+  end
 
 For more documentation about sprockets, have a look at the [Sprockets](https://github.com/sstephenson/sprockets/) gem.
 
